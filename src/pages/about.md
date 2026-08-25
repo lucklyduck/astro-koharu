@@ -6,29 +6,27 @@ date: 2025-01-03 01:01:33
 description: "关于我？"
 ---
 
-## 你好，这里是余弦
+## 你好，这里是猫猫草
 
-[![github badge](https://img.shields.io/badge/dynamic/json?color=blue&label=Github&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3Dyusixian)](https://github.com/yusixian)
+[![github badge](https://img.shields.io/badge/dynamic/json?color=blue&label=Github&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3Dyusixian)](https://github.com/lucklyduck)
 
-cosine = 余弦 = cos
+可以叫我猫猫，也可以叫猫草，喵喵
 
-愿热情永存，愿热爱不灭，愿生活无憾
+祝天天开心喵
 
-> 我们 都只是无名之辈 \
+<!-- > 我们 都只是无名之辈 \
 > 做你自己最喜欢的事 \
 > 像花一样 肆意绽放 \
-> 不去管 有没有人欣赏
+> 不去管 有没有人欣赏 -->
 
 ### 找到我
 
-个人 Telegram 前端频道：日常碎碎念，偶尔掉落优质前端博文推荐、学习资源等
+GitHub 仓库主页：有自己的一些代码喵
 
-https://t.me/cosine_front_end
+https://github.com/lucklyduck
 
-Gitbook 前端学习记录
+[![GitHub Stats](https://github-stats-extended.vercel.app/api?username=lucklyduck&include_all_commits=true&theme=vue)](https://github-stats-extended.vercel.app/api?username=lucklyduck&include_all_commits=true&theme=vue)
 
-https://book.cosine.ren/
+[![GitHub Stats](https://github-stats-extended.vercel.app/api/top-langs?username=lucklyduck&layout=compact&langs_count=4&theme=catppuccin_latte)](https://github-stats-extended.vercel.app/api/top-langs?username=lucklyduck&layout=compact&langs_count=4&theme=catppuccin_latte)
 
-[![GitHub State](https://git-stats.cosine.ren/api?username=yusixian&theme=dark&show_icons=true&hide_border=true)](https://github.com/anuraghazra/github-readme-stats)
-
-[![GitHub Streak](https://github-readme-streak-stats-rust-tau.vercel.app?user=yusixian&theme=dark&date_format=%5BY%20%5DM%20&hide_border=true)](https://git.io/streak-stats)
+[![GitHub Streak](https://streak-stats.demolab.com/?user=lucklyduck)](https://git.io/streak-stats)
