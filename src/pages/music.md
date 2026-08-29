@@ -4,22 +4,14 @@ title: "歌单"
 description: "我喜欢的音乐"
 ---
 
-这里可以放你喜欢的音乐歌单。
+收藏着许多喜欢听的音乐~
 
-使用 `{% media audio %}` 标签嵌入网易云音乐或 QQ 音乐歌单：
-
-```markdown
-{% media audio %}
-- title: 我的歌单
-  list:
-    - https://music.163.com/#/playlist?id=你的歌单ID
-{% endmedia %}
-```
+听听看，说不定也有你喜欢听的歌呢喵~
 
 {% media audio %}
-- title: 诗岸歌单 山山～全是山山～
+- title: 喜欢的音乐~
   list:
-    - https://music.163.com/#/playlist?id=8676645748
+    - https://music.163.com/#/playlist?id=2788064694
 - title: 超かぐや姫！
   list:
     - https://music.163.com/#/album?id=358640968

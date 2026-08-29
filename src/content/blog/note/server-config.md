@@ -35,7 +35,7 @@ bash <(curl -sL https://run.NodeQuality.com)
 
 这个脚本会自动测速、测路由，并生成一个包含图表的在线结果页。测试需要一段时间，这段时间里可以继续往下做，或者先刷会手机喵~
 
-![脚本链接的图片](/服务器配置/.assets/性能测试图片.png "图片title")
+![vmiss机器性能测试](/post/server-config/性能测试图片.png )
 
 ## 三、配置新用户和 ssh 
 
