@@ -231,6 +231,13 @@ friends:
       image: https://blog.cosine.ren/img/avatar.webp
       color: '#ed788b'
 
+    - site: 麦麦的博客
+      url: https://blog.hajimai.com
+      owner: lava
+      desc: 麦麦博客
+      image: https://blog.hajimai.com/_astro/hajimai.DP-1UPAt_Z23rIra.webp
+      color: "#9BAD69"
+
 
 # =============================================================================
 # Announcements
