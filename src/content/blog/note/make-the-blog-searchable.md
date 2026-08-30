@@ -6,7 +6,7 @@ tags:
   - 服务器
 categories:
   - 笔记
-draft: true
+draft: false
 ---
 
 # 怎么让你的 astor-koharu 博客可以被搜索到
@@ -47,8 +47,42 @@ https://link.zhihu.com/?target=https%3A//search.google.com/search-console/welcom
 
 ## 百度收录
 
+百度收录需要填写一些个人信息。如果比较敏感可以不进行收录（网站很卡，不需要的话都没必要搞说是）
+
+打开百度收录平台
 
 https://ziyuan.baidu.com/site/index
 
+点击添加网址
+
+随后会需要我们填写个人信息。按要求填写验证
+
+随后需要我们输入网址，并选择站点属性。
+
+随后需要我们验证网站
+
+> 百度不支持类似谷歌的网域，只能使用文件验证
+
+点击下载文件，并将文件放置到 public 目录下。如果博客是托管的，进行 git commit，并同步。
+
+等待个人博客重新部署加载一会，然后点击以确认验证文件是否能正常访问，随后即可完成验证。
+
+点击左侧的资源提交-普通收录。选择 sitemap 提交，将 https://你的博客链接/sitemap-0.xml 提交即可
+
+过一段时间后你可以通过百度收录网站或者搜索框输入 site:xxx.com 来查看收录情况和流量情况
+
+## Bing 收录
+
+打开 Bing 收录网站
+
+https://link.zhihu.com/?target=https%3A//www.bing.com/webmasters/home
+
+登录后，可以直接选择从谷歌导入（GSC），此时选择登录之前的谷歌账号即可。
+
+## 其他
+
+其他搜索引擎说实话用的都很少了，而且有的添加收录很不友好（有的不支持 sitemap），在以上几家有了收录后基本就都能查的到。
+
+添加完成后，还需要等上一段时间才会被收录。保持耐心，保持质量，保持独创。希望大家都能被搜索引擎收录喵！
 
 
