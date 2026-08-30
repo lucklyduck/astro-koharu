@@ -25,7 +25,7 @@ draft: false
 
 打开谷歌收录管理网站：
 
-https://link.zhihu.com/?target=https%3A//search.google.com/search-console/welcome%3Fhl%3Dzh-CN
+https://search.google.com/search-console/welcome?hl=zh-CN
 
 选择添加网站资源
 
@@ -69,13 +69,15 @@ https://ziyuan.baidu.com/site/index
 
 点击左侧的资源提交-普通收录。选择 sitemap 提交，将 https://你的博客链接/sitemap-0.xml 提交即可
 
+> 百度不支持添加索引文件，添加了可能会无法添加其他站点地图文件
+
 过一段时间后你可以通过百度收录网站或者搜索框输入 site:xxx.com 来查看收录情况和流量情况
 
 ## Bing 收录
 
 打开 Bing 收录网站
 
-https://link.zhihu.com/?target=https%3A//www.bing.com/webmasters/home
+https://www.bing.com/webmasters/home
 
 登录后，可以直接选择从谷歌导入（GSC），此时选择登录之前的谷歌账号即可。
 
