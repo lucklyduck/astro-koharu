@@ -25,6 +25,13 @@ import { remark } from 'remark';
 import strip from 'strip-markdown';
 import { getNonDefaultLocaleGlobs } from './locale-filter';
 
+// This script is also invoked directly with tsx, outside Astro's env loader.
+try {
+  process.loadEnvFile();
+} catch {
+  // .env is optional; callers may provide LLM_* variables directly.
+}
+
 // --------- Configuration ---------
 const CONTENT_GLOB = 'src/content/blog/**/*.md';
 const NON_DEFAULT_LOCALE_GLOBS = getNonDefaultLocaleGlobs();
@@ -34,9 +41,16 @@ const CACHE_VERSION = '1';
 
 // LLM API settings (OpenAI-compatible)
 // Works with: LM Studio, Ollama, OpenAI, etc.
-const API_BASE_URL = 'http://127.0.0.1:1234/v1/';
-const API_KEY = 'lm-studio'; // LM Studio doesn't require a real key
-const DEFAULT_MODEL = 'qwen/qwen3-4b-2507';
+const API_BASE_URL = process.env.LLM_API_BASE_URL ?? 'https://api.deepseek.com/v1/';
+const API_KEY = process.env.LLM_API_KEY ?? '';
+const DEFAULT_MODEL = process.env.LLM_MODEL ?? 'deepseek-v4-pro';
+const IS_DEEPSEEK_API = (() => {
+  try {
+    return new URL(API_BASE_URL).hostname.endsWith('deepseek.com');
+  } catch {
+    return false;
+  }
+})();
 
 // --------- Parse CLI Arguments ---------
 function parseArgs(): { model: string; force: boolean } {
@@ -131,7 +145,9 @@ function extractSlug(filePath: string, link?: string): string {
 
 async function checkApiRunning(): Promise<boolean> {
   try {
-    const response = await fetch(`${API_BASE_URL}models`);
+    const response = await fetch(`${API_BASE_URL}models`, {
+      headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : undefined,
+    });
     return response.ok;
   } catch {
     return false;
@@ -157,6 +173,9 @@ async function generateSummary(text: string, model: string): Promise<string> {
         content: `请总结以下文章：\n\n${truncatedText}`,
       },
     ],
+    // DeepSeek V4 enables thinking by default. For a short summary, reasoning can
+    // consume the entire output budget and leave message.content empty.
+    ...(IS_DEEPSEEK_API ? { thinking: { type: 'disabled' as const } } : {}),
     temperature: 0.3,
     maxTokens: 200,
   });
@@ -222,6 +241,12 @@ async function main() {
   const { model, force } = parseArgs();
 
   try {
+    if (!API_KEY) {
+      console.log(chalk.red('Error: LLM_API_KEY is not configured.'));
+      console.log(chalk.gray('Set LLM_API_KEY in the environment before generating summaries.'));
+      process.exitCode = 1;
+      return;
+    }
     console.log(chalk.cyan('=== AI Summary Generator ===\n'));
     console.log(chalk.gray(`Model: ${model}`));
     if (force) {
@@ -340,6 +365,12 @@ async function main() {
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
     console.log(chalk.green(`\nDone! Generated summaries for ${Object.keys(newEntries).length} posts in ${elapsed}s`));
     console.log(chalk.cyan(`Output saved to: ${OUTPUT_FILE}`));
+
+    // Keep partial/cached output, but report a failed command when any post could
+    // not be summarized so the CLI and CI do not present a false success state.
+    if (errors > 0) {
+      process.exitCode = 1;
+    }
   } catch (error) {
     console.error(chalk.red('\nError:'), error);
     process.exitCode = 1;

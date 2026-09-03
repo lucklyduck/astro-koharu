@@ -179,13 +179,11 @@ Include /etc/ssh/sshd_config.d/*.conf
 </div>
 
 这个配置指的是
-## 四、防火墙
+## 四、安装 UFW 防火墙和 fail2ban(推荐)
 
 配置防火墙可以避免很多私密的服务被外界访问。有效提升安全性！这里以 UFW 为例喵
 
 UFW 是 iptables 的前端，语法简单，非常适合快速设置。
-
-### 4.1、安装 UFW 并放行常用端口(推荐)
 
 ```bash
 # 安装ufw
@@ -204,3 +202,65 @@ sudo ufw enable
 
 # 查看防火墙规则
 sudo ufw status numbered
+```
+
+## 五、其他常用软件
+
+下面列举了一些我常用的会一同安装的软件，可以参考。
+
+### caddy 反代
+
+caddy 是一个现代、开源的 Web 服务器和反向代理服务器，相比较于常用的 nginx，配置更简单且支持自动 https 证书申请。
+
+安装 caddy
+
+```bash
+sudo apt update
+sudo apt install caddy
+```
+
+安装后，访问服务器 80 端口，即可看到欢迎界面
+
+编辑配置文件
+
+```bash
+sudo nano /etc/caddy/Caddyfile
+```
+
+如果你需要构建一个简单网页，你可以
+
+```json
+example.com {
+        root * /var/www/html
+        file_server
+}
+```
+
+随后重启 caddy 服务
+
+```bash
+sudo systemctl reload caddy
+```
+
+这将会监听默认 80 和 443 端口，并在访问网址时返回你的/var/www/html/index.html 网页文件
+
+caddy 拥有自动证书申请和 http 重定向到 https，可以省去大量配置工作。
+
+
+如果需要配置使用其他端口：
+
+添加配置
+
+```json
+{
+        https_port 34567
+        http_port 45678
+}
+```
+
+这将会修改 http 和 https 的监听端口，适用于需要使用其他端口的情况。
+
+### 安装 komari 探针
+
+打开自己的 komari 后台，点击添加节点，配置禁止使用远程控制后（推荐），复制指令到服务器，直接执行即可。
+

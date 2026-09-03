@@ -90,7 +90,8 @@ export function GenerateApp({
         // Check if any failed
         const failed = [...allResults.entries()].find(([, r]) => !r.success);
         if (failed) {
-          setError(`生成 ${GENERATE_ITEMS.find((i) => i.id === failed[0])?.label} 失败`);
+          const detail = failed[1].error || `exit code: ${failed[1].code}`;
+          setError(`生成 ${GENERATE_ITEMS.find((i) => i.id === failed[0])?.label} 失败 (${detail})`);
           setStatus('error');
         } else {
           setStatus('done');
@@ -108,7 +109,7 @@ export function GenerateApp({
         setResults(new Map([[selectedType, result]]));
 
         if (!result.success) {
-          setError(`生成失败 (exit code: ${result.code})`);
+          setError(result.error || `生成失败 (exit code: ${result.code})`);
           setStatus('error');
         } else {
           setStatus('done');

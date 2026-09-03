@@ -1,5 +1,13 @@
 export type GenerateType = 'lqips' | 'similarities' | 'summaries';
 
+// Load the repository .env file for the standalone CLI (Astro does this automatically,
+// but `tsx scripts/koharu.tsx` does not).
+try {
+  process.loadEnvFile();
+} catch {
+  // .env is optional; callers may provide LLM_* variables directly.
+}
+
 export interface GenerateItem {
   id: GenerateType;
   label: string;
@@ -34,5 +42,6 @@ export const GENERATE_ITEMS: GenerateItem[] = [
   },
 ];
 
-export const DEFAULT_LLM_MODEL = 'qwen/qwen3-4b-2507';
-export const LLM_API_URL = 'http://127.0.0.1:1234/v1/';
+export const DEFAULT_LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-pro';
+export const LLM_API_URL = process.env.LLM_API_BASE_URL || 'https://api.deepseek.com/v1/';
+export const LLM_API_KEY = process.env.LLM_API_KEY || '';

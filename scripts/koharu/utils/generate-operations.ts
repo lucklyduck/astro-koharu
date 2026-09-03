@@ -1,11 +1,15 @@
 import { spawn } from 'node:child_process';
 import path from 'node:path';
-import { GENERATE_ITEMS, type GenerateType, LLM_API_URL } from '../constants/generate';
+import { fileURLToPath } from 'node:url';
+import { GENERATE_ITEMS, type GenerateType, LLM_API_KEY, LLM_API_URL } from '../constants/generate';
 import { PROJECT_ROOT } from '../constants/paths';
+
+const TSX_CLI_PATH = fileURLToPath(import.meta.resolve('tsx/cli'));
 
 export interface RunScriptResult {
   success: boolean;
   code: number;
+  error?: string;
 }
 
 export interface GenerateOptions {
@@ -16,13 +20,14 @@ export interface GenerateOptions {
 }
 
 /**
- * Run a TypeScript script using npx tsx
- * Note: Uses spawn without shell for security (avoids command injection)
+ * Run a TypeScript script with the project's local tsx dependency.
+ * Calling npx directly is not portable: Windows cannot spawn the npx.cmd shim
+ * without a shell. Running the resolved CLI with Node keeps shell execution disabled.
  */
 export function runScript(scriptPath: string, args: string[] = []): Promise<RunScriptResult> {
   return new Promise((resolve) => {
     const fullPath = path.join(PROJECT_ROOT, scriptPath);
-    const child = spawn('npx', ['tsx', fullPath, ...args], {
+    const child = spawn(process.execPath, [TSX_CLI_PATH, fullPath, ...args], {
       cwd: PROJECT_ROOT,
       stdio: 'inherit',
     });
@@ -34,10 +39,11 @@ export function runScript(scriptPath: string, args: string[] = []): Promise<RunS
       });
     });
 
-    child.on('error', () => {
+    child.on('error', (error) => {
       resolve({
         success: false,
         code: 1,
+        error: error.message,
       });
     });
   });
@@ -50,6 +56,7 @@ export async function checkLlmServer(): Promise<boolean> {
   try {
     const response = await fetch(`${LLM_API_URL}models`, {
       method: 'GET',
+      headers: LLM_API_KEY ? { Authorization: `Bearer ${LLM_API_KEY}` } : undefined,
       signal: AbortSignal.timeout(3000),
     });
     return response.ok;
